@@ -25,8 +25,11 @@ const io = sockerIO(server, {
   }
 });
 
-io.on('connection', () =>{
-  console.log("new Connection");
+io.on('connection', (socket) =>{
+  console.log("new Connection", socket.id);
+  socket.on('chat:message', (data) => {
+    io.sockets.emit("chat:message", data);
+  })
 })
 
 module.exports = app;
